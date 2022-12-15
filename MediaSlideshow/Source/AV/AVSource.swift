@@ -37,20 +37,7 @@ open class AVSource: NSObject, MediaSource {
     open func slide(in slideshow: MediaSlideshow) -> MediaSlideshowSlide {
         let playerController = AVPlayerViewController()
         playerController.player = player
-        playerController.showsPlaybackControls = onAppear == .paused || slideshow.zoomEnabled
-        var playView: AVSlidePlayingOverlayView?
-        var pauseView: AVSlidePausedOverlayView?
-        if !playerController.showsPlaybackControls {
-            playView = AVSlidePlayingOverlayView()
-            pauseView = AVSlidePausedOverlayView()
-        }
-        let overlay = StandardAVSlideOverlayView(
-            item: item,
-            player: player,
-            playView: playView,
-            pauseView: pauseView,
-            activityView: slideshow.activityIndicator?.create())
-        playerController.contentOverlayView?.embed(overlay)
+        playerController.showsPlaybackControls = false
         let slide = AVPlayerSlide(
             playerController: playerController,
             mediaContentMode: slideshow.contentScaleMode)
@@ -69,7 +56,7 @@ extension AVSource: AVPlayerSlideDelegate {
         switch onAppear {
         case .play:
             player.play()
-            player.isMuted = !slide.playerController.showsPlaybackControls
+            player.isMuted = true
         case .paused:
             player.pause()
         }
