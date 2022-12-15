@@ -38,6 +38,9 @@ open class AVSource: NSObject, MediaSource {
         let playerController = AVPlayerViewController()
         playerController.player = player
         playerController.showsPlaybackControls = false
+        if #available(iOS 16.0, *) {
+            playerController.allowsVideoFrameAnalysis = false
+        }
         let slide = AVPlayerSlide(
             playerController: playerController,
             mediaContentMode: slideshow.contentScaleMode)
