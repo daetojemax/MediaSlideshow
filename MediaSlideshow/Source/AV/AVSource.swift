@@ -58,6 +58,7 @@ extension AVSource: AVPlayerSlideDelegate {
     open func slideDidAppear(_ slide: AVPlayerSlide) {
         switch onAppear {
         case .play:
+            player.seek(to: .zero)
             player.play()
             player.isMuted = true
         case .paused:
