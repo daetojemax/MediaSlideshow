@@ -1,10 +1,3 @@
-//
-//  AVSource.swift
-//  MediaSlideshow
-//
-//  Created by Peter Meyers on 1/5/21.
-//
-
 import AVFoundation
 import AVKit
 import Foundation
@@ -18,6 +11,8 @@ open class AVSource: NSObject, MediaSource {
     private let asset: AVAsset
     private lazy var item = AVPlayerItem(asset: asset)
     private lazy var player = AVPlayer(playerItem: item)
+    private var rate: Float?
+    private var start: Double = 0
 
     public init(asset: AVAsset, onAppear: Playback) {
         self.asset = asset
@@ -30,8 +25,10 @@ open class AVSource: NSObject, MediaSource {
             object: item)
     }
 
-    public convenience init(url: URL, onAppear: Playback) {
+    public convenience init(url: URL, onAppear: Playback, rate: Float? = nil, start: Double = 0) {
         self.init(asset: AVAsset(url: url), onAppear: onAppear)
+        self.rate = rate
+        self.start = start
     }
 
     open func slide(in slideshow: MediaSlideshow) -> MediaSlideshowSlide {
@@ -58,8 +55,11 @@ extension AVSource: AVPlayerSlideDelegate {
     open func slideDidAppear(_ slide: AVPlayerSlide) {
         switch onAppear {
         case .play:
-            player.seek(to: .zero)
+            player.seek(to: CMTime(seconds: start, preferredTimescale: 600))
             player.play()
+            if let rate {
+                player.rate = rate
+            }
             player.isMuted = true
         case .paused:
             player.pause()
