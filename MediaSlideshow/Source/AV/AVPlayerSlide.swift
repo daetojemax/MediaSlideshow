@@ -81,6 +81,14 @@ public class AVPlayerSlide: UIView, MediaSlideshowSlide {
         delegate?.slideDidDisappear(self)
     }
 
+    public func pause() {
+        playerController.player?.pause()
+    }
+    
+    public func resume() {
+        playerController.player?.play()
+    }
+
     @objc
     private func didSingleTap() {}
 }
