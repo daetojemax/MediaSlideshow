@@ -22,4 +22,8 @@ public protocol MediaSlideshowSlide: UIView {
     func didAppear()
 
     func didDisappear()
+
+    func pause()
+    
+    func resume()
 }
