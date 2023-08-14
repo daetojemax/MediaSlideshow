@@ -11,6 +11,10 @@ import UIKit
 @objcMembers
 open class ImageSlide: UIScrollView, UIScrollViewDelegate, ZoomableMediaSlideshowSlide {
 
+    public func pause() {}
+    
+    public func resume() {}
+
     /// Image view to hold the image
     public let imageView = UIImageView()
 
