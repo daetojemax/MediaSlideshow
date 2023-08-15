@@ -35,6 +35,7 @@ open class AVSource: NSObject, MediaSource {
         let playerController = AVPlayerViewController()
         playerController.player = player
         playerController.showsPlaybackControls = false
+        player.seek(to: CMTime(seconds: start, preferredTimescale: 600))
         if #available(iOS 16.0, *) {
             playerController.allowsVideoFrameAnalysis = false
         }
@@ -55,7 +56,6 @@ extension AVSource: AVPlayerSlideDelegate {
     open func slideDidAppear(_ slide: AVPlayerSlide) {
         switch onAppear {
         case .play:
-            player.seek(to: CMTime(seconds: start, preferredTimescale: 600))
             player.play()
             if let rate {
                 player.rate = rate
